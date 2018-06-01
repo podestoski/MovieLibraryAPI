@@ -5,12 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="aff4b3d34cc34145aa9c57d6c62d48b5" Name="Diagram1">
-        <EntityTypeShape EntityType="MyMovieLibraryModel.Users" Width="1.5" PointX="2.875" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyMovieLibraryModel.Movies" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyMovieLibraryModel.Rel_User_Movie" Width="1.5" PointX="5.125" PointY="1" />
-        <AssociationConnector Association="MyMovieLibraryModel.FK__Rel_User___IdMov__114A936A" />
-        <AssociationConnector Association="MyMovieLibraryModel.FK__Rel_User___IdUse__10566F31" />
-        </Diagram>
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Cat_Continents" Width="2.125" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Cat_Countries" Width="2.125" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Cat_Platforms" Width="2.125" PointX="7.5" PointY="5.375" />
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Movies" Width="2.125" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Rel_User_Movie" Width="2.125" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Rel_User_Movie_Platform" Width="2.125" PointX="9.75" PointY="1.25" />
+        <EntityTypeShape EntityType="MyMovieLibraryModel.Users" Width="2.125" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="MyMovieLibraryModel.FK__Cat_Count__IdCon__4D94879B" />
+        <AssociationConnector Association="MyMovieLibraryModel.FK__Users__IdCountry__5165187F" />
+        <AssociationConnector Association="MyMovieLibraryModel.FK__Rel_User___IdPla__71D1E811" />
+        <AssociationConnector Association="MyMovieLibraryModel.FK__Rel_User___IdMov__5812160E" />
+        <AssociationConnector Association="MyMovieLibraryModel.FK__Rel_User___Id_Re__70DDC3D8" />
+        <AssociationConnector Association="MyMovieLibraryModel.FK__Rel_User___IdUse__571DF1D5" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

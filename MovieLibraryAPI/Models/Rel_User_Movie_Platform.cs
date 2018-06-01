@@ -12,19 +12,13 @@ namespace MovieLibraryAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Movies
+    public partial class Rel_User_Movie_Platform
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Movies()
-        {
-            this.Rel_User_Movie = new HashSet<Rel_User_Movie>();
-        }
-    
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string ImagePath { get; set; }
+        public int Id_Rel_User_Movie { get; set; }
+        public int IdPlatform { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rel_User_Movie> Rel_User_Movie { get; set; }
+        public virtual Cat_Platforms Cat_Platforms { get; set; }
+        public virtual Rel_User_Movie Rel_User_Movie { get; set; }
     }
 }

@@ -12,23 +12,18 @@ namespace MovieLibraryAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Cat_Platforms
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public Cat_Platforms()
         {
-            this.Rel_User_Movie = new HashSet<Rel_User_Movie>();
+            this.Rel_User_Movie_Platform = new HashSet<Rel_User_Movie_Platform>();
         }
     
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Name { get; set; }
-        public string Last_name { get; set; }
-        public int IdCountry { get; set; }
+        public string Platform { get; set; }
     
-        public virtual Cat_Countries Cat_Countries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rel_User_Movie> Rel_User_Movie { get; set; }
+        public virtual ICollection<Rel_User_Movie_Platform> Rel_User_Movie_Platform { get; set; }
     }
 }

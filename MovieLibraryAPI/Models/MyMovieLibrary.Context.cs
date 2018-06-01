@@ -25,8 +25,12 @@ namespace MovieLibraryAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Cat_Continents> Cat_Continents { get; set; }
+        public virtual DbSet<Cat_Countries> Cat_Countries { get; set; }
+        public virtual DbSet<Cat_Platforms> Cat_Platforms { get; set; }
         public virtual DbSet<Movies> Movies { get; set; }
         public virtual DbSet<Rel_User_Movie> Rel_User_Movie { get; set; }
+        public virtual DbSet<Rel_User_Movie_Platform> Rel_User_Movie_Platform { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

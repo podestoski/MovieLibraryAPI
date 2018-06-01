@@ -198,6 +198,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cat_Continents.cs">
+      <DependentUpon>MyMovieLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cat_Countries.cs">
+      <DependentUpon>MyMovieLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cat_Platforms.cs">
+      <DependentUpon>MyMovieLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LibraryMovie.cs" />
     <Compile Include="Models\Movies.cs">
       <DependentUpon>MyMovieLibrary.tt</DependentUpon>
     </Compile>
@@ -216,7 +226,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyMovieLibrary.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Platform.cs" />
     <Compile Include="Models\Rel_User_Movie.cs">
+      <DependentUpon>MyMovieLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rel_User_Movie_Platform.cs">
       <DependentUpon>MyMovieLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Users.cs">

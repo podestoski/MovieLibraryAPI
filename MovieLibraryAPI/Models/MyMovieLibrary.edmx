@@ -5,6 +5,29 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MyMovieLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cat_Continents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Continent" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cat_Countries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="3" />
+          <Property Name="IdContinent" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cat_Platforms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Platform" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
         <EntityType Name="Movies">
           <Key>
             <PropertyRef Name="Id" />
@@ -21,6 +44,14 @@
           <Property Name="IdUser" Type="int" Nullable="false" />
           <Property Name="IdMovie" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Rel_User_Movie_Platform">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Rel_User_Movie" Type="int" Nullable="false" />
+          <Property Name="IdPlatform" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,6 +63,30 @@
           <Property Name="Last_name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="IdCountry" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Cat_Count__IdCon__4D94879B">
+          <End Role="Cat_Continents" Type="Self.Cat_Continents" Multiplicity="1" />
+          <End Role="Cat_Countries" Type="Self.Cat_Countries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Continents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cat_Countries">
+              <PropertyRef Name="IdContinent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rel_User___Id_Re__70DDC3D8">
+          <End Role="Rel_User_Movie" Type="Self.Rel_User_Movie" Multiplicity="1" />
+          <End Role="Rel_User_Movie_Platform" Type="Self.Rel_User_Movie_Platform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rel_User_Movie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rel_User_Movie_Platform">
+              <PropertyRef Name="Id_Rel_User_Movie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Rel_User___IdMov__5812160E">
           <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
           <End Role="Rel_User_Movie" Type="Self.Rel_User_Movie" Multiplicity="*" />
@@ -41,6 +96,18 @@
             </Principal>
             <Dependent Role="Rel_User_Movie">
               <PropertyRef Name="IdMovie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rel_User___IdPla__71D1E811">
+          <End Role="Cat_Platforms" Type="Self.Cat_Platforms" Multiplicity="1" />
+          <End Role="Rel_User_Movie_Platform" Type="Self.Rel_User_Movie_Platform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Platforms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rel_User_Movie_Platform">
+              <PropertyRef Name="IdPlatform" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -56,47 +123,115 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Users__IdCountry__5165187F">
+          <End Role="Cat_Countries" Type="Self.Cat_Countries" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Countries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MyMovieLibraryModelStoreContainer">
+          <EntitySet Name="Cat_Continents" EntityType="Self.Cat_Continents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cat_Countries" EntityType="Self.Cat_Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cat_Platforms" EntityType="Self.Cat_Platforms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rel_User_Movie" EntityType="Self.Rel_User_Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rel_User_Movie_Platform" EntityType="Self.Rel_User_Movie_Platform" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cat_Count__IdCon__4D94879B" Association="Self.FK__Cat_Count__IdCon__4D94879B">
+            <End Role="Cat_Continents" EntitySet="Cat_Continents" />
+            <End Role="Cat_Countries" EntitySet="Cat_Countries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rel_User___Id_Re__70DDC3D8" Association="Self.FK__Rel_User___Id_Re__70DDC3D8">
+            <End Role="Rel_User_Movie" EntitySet="Rel_User_Movie" />
+            <End Role="Rel_User_Movie_Platform" EntitySet="Rel_User_Movie_Platform" />
+          </AssociationSet>
           <AssociationSet Name="FK__Rel_User___IdMov__5812160E" Association="Self.FK__Rel_User___IdMov__5812160E">
             <End Role="Movies" EntitySet="Movies" />
             <End Role="Rel_User_Movie" EntitySet="Rel_User_Movie" />
           </AssociationSet>
+          <AssociationSet Name="FK__Rel_User___IdPla__71D1E811" Association="Self.FK__Rel_User___IdPla__71D1E811">
+            <End Role="Cat_Platforms" EntitySet="Cat_Platforms" />
+            <End Role="Rel_User_Movie_Platform" EntitySet="Rel_User_Movie_Platform" />
+          </AssociationSet>
           <AssociationSet Name="FK__Rel_User___IdUse__571DF1D5" Association="Self.FK__Rel_User___IdUse__571DF1D5">
             <End Role="Users" EntitySet="Users" />
             <End Role="Rel_User_Movie" EntitySet="Rel_User_Movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__IdCountry__5165187F" Association="Self.FK__Users__IdCountry__5165187F">
+            <End Role="Cat_Countries" EntitySet="Cat_Countries" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MyMovieLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdCountry" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="MyMovieLibraryEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Cat_Continents" EntityType="MyMovieLibraryModel.Cat_Continents" />
+          <EntitySet Name="Cat_Countries" EntityType="MyMovieLibraryModel.Cat_Countries" />
+          <EntitySet Name="Cat_Platforms" EntityType="MyMovieLibraryModel.Cat_Platforms" />
           <EntitySet Name="Movies" EntityType="MyMovieLibraryModel.Movies" />
           <EntitySet Name="Rel_User_Movie" EntityType="MyMovieLibraryModel.Rel_User_Movie" />
-          <AssociationSet Name="FK__Rel_User___IdMov__114A936A" Association="MyMovieLibraryModel.FK__Rel_User___IdMov__114A936A">
+          <EntitySet Name="Rel_User_Movie_Platform" EntityType="MyMovieLibraryModel.Rel_User_Movie_Platform" />
+          <EntitySet Name="Users" EntityType="MyMovieLibraryModel.Users" />
+          <AssociationSet Name="FK__Cat_Count__IdCon__4D94879B" Association="MyMovieLibraryModel.FK__Cat_Count__IdCon__4D94879B">
+            <End Role="Cat_Continents" EntitySet="Cat_Continents" />
+            <End Role="Cat_Countries" EntitySet="Cat_Countries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__IdCountry__5165187F" Association="MyMovieLibraryModel.FK__Users__IdCountry__5165187F">
+            <End Role="Cat_Countries" EntitySet="Cat_Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rel_User___IdPla__71D1E811" Association="MyMovieLibraryModel.FK__Rel_User___IdPla__71D1E811">
+            <End Role="Cat_Platforms" EntitySet="Cat_Platforms" />
+            <End Role="Rel_User_Movie_Platform" EntitySet="Rel_User_Movie_Platform" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rel_User___IdMov__5812160E" Association="MyMovieLibraryModel.FK__Rel_User___IdMov__5812160E">
             <End Role="Movies" EntitySet="Movies" />
             <End Role="Rel_User_Movie" EntitySet="Rel_User_Movie" />
           </AssociationSet>
-          <AssociationSet Name="FK__Rel_User___IdUse__10566F31" Association="MyMovieLibraryModel.FK__Rel_User___IdUse__10566F31">
+          <AssociationSet Name="FK__Rel_User___Id_Re__70DDC3D8" Association="MyMovieLibraryModel.FK__Rel_User___Id_Re__70DDC3D8">
+            <End Role="Rel_User_Movie" EntitySet="Rel_User_Movie" />
+            <End Role="Rel_User_Movie_Platform" EntitySet="Rel_User_Movie_Platform" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rel_User___IdUse__571DF1D5" Association="MyMovieLibraryModel.FK__Rel_User___IdUse__571DF1D5">
             <End Role="Users" EntitySet="Users" />
             <End Role="Rel_User_Movie" EntitySet="Rel_User_Movie" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Cat_Continents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Continent" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cat_Countries" Relationship="MyMovieLibraryModel.FK__Cat_Count__IdCon__4D94879B" FromRole="Cat_Continents" ToRole="Cat_Countries" />
+        </EntityType>
+        <EntityType Name="Cat_Countries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="IdContinent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Continents" Relationship="MyMovieLibraryModel.FK__Cat_Count__IdCon__4D94879B" FromRole="Cat_Countries" ToRole="Cat_Continents" />
+          <NavigationProperty Name="Users" Relationship="MyMovieLibraryModel.FK__Users__IdCountry__5165187F" FromRole="Cat_Countries" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Cat_Platforms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Platform" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rel_User_Movie_Platform" Relationship="MyMovieLibraryModel.FK__Rel_User___IdPla__71D1E811" FromRole="Cat_Platforms" ToRole="Rel_User_Movie_Platform" />
+        </EntityType>
         <EntityType Name="Movies">
           <Key>
             <PropertyRef Name="Id" />
@@ -104,6 +239,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rel_User_Movie" Relationship="MyMovieLibraryModel.FK__Rel_User___IdMov__5812160E" FromRole="Movies" ToRole="Rel_User_Movie" />
         </EntityType>
         <EntityType Name="Rel_User_Movie">
           <Key>
@@ -112,8 +248,70 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="Int32" Nullable="false" />
           <Property Name="IdMovie" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Movies" Relationship="MyMovieLibraryModel.FK__Rel_User___IdMov__5812160E" FromRole="Rel_User_Movie" ToRole="Movies" />
+          <NavigationProperty Name="Rel_User_Movie_Platform" Relationship="MyMovieLibraryModel.FK__Rel_User___Id_Re__70DDC3D8" FromRole="Rel_User_Movie" ToRole="Rel_User_Movie_Platform" />
+          <NavigationProperty Name="Users" Relationship="MyMovieLibraryModel.FK__Rel_User___IdUse__571DF1D5" FromRole="Rel_User_Movie" ToRole="Users" />
         </EntityType>
-        <Association Name="FK__Rel_User___IdMov__114A936A">
+        <EntityType Name="Rel_User_Movie_Platform">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Rel_User_Movie" Type="Int32" Nullable="false" />
+          <Property Name="IdPlatform" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Platforms" Relationship="MyMovieLibraryModel.FK__Rel_User___IdPla__71D1E811" FromRole="Rel_User_Movie_Platform" ToRole="Cat_Platforms" />
+          <NavigationProperty Name="Rel_User_Movie" Relationship="MyMovieLibraryModel.FK__Rel_User___Id_Re__70DDC3D8" FromRole="Rel_User_Movie_Platform" ToRole="Rel_User_Movie" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Last_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IdCountry" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cat_Countries" Relationship="MyMovieLibraryModel.FK__Users__IdCountry__5165187F" FromRole="Users" ToRole="Cat_Countries" />
+          <NavigationProperty Name="Rel_User_Movie" Relationship="MyMovieLibraryModel.FK__Rel_User___IdUse__571DF1D5" FromRole="Users" ToRole="Rel_User_Movie" />
+        </EntityType>
+        <Association Name="FK__Cat_Count__IdCon__4D94879B">
+          <End Type="MyMovieLibraryModel.Cat_Continents" Role="Cat_Continents" Multiplicity="1" />
+          <End Type="MyMovieLibraryModel.Cat_Countries" Role="Cat_Countries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Continents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cat_Countries">
+              <PropertyRef Name="IdContinent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__IdCountry__5165187F">
+          <End Type="MyMovieLibraryModel.Cat_Countries" Role="Cat_Countries" Multiplicity="1" />
+          <End Type="MyMovieLibraryModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Countries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rel_User___IdPla__71D1E811">
+          <End Type="MyMovieLibraryModel.Cat_Platforms" Role="Cat_Platforms" Multiplicity="1" />
+          <End Type="MyMovieLibraryModel.Rel_User_Movie_Platform" Role="Rel_User_Movie_Platform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cat_Platforms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rel_User_Movie_Platform">
+              <PropertyRef Name="IdPlatform" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rel_User___IdMov__5812160E">
           <End Type="MyMovieLibraryModel.Movies" Role="Movies" Multiplicity="1" />
           <End Type="MyMovieLibraryModel.Rel_User_Movie" Role="Rel_User_Movie" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +323,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Rel_User___IdUse__10566F31">
+        <Association Name="FK__Rel_User___Id_Re__70DDC3D8">
+          <End Type="MyMovieLibraryModel.Rel_User_Movie" Role="Rel_User_Movie" Multiplicity="1" />
+          <End Type="MyMovieLibraryModel.Rel_User_Movie_Platform" Role="Rel_User_Movie_Platform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rel_User_Movie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rel_User_Movie_Platform">
+              <PropertyRef Name="Id_Rel_User_Movie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rel_User___IdUse__571DF1D5">
           <End Type="MyMovieLibraryModel.Users" Role="Users" Multiplicity="1" />
           <End Type="MyMovieLibraryModel.Rel_User_Movie" Role="Rel_User_Movie" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,43 +347,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MyMovieLibraryModelStoreContainer" CdmEntityContainer="MyMovieLibraryEntities">
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(MyMovieLibraryModel.Users)">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Last_name" ColumnName="Last_name" />
-          <ScalarProperty Name="IdCountry" ColumnName="IdCountry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Movies">
-      <EntityTypeMapping TypeName="IsTypeOf(MyMovieLibraryModel.Movies)">
-        <MappingFragment StoreEntitySet="Movies">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Rel_User_Movie">
-      <EntityTypeMapping TypeName="IsTypeOf(MyMovieLibraryModel.Rel_User_Movie)">
-        <MappingFragment StoreEntitySet="Rel_User_Movie">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-          <ScalarProperty Name="IdMovie" ColumnName="IdMovie" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-  </EntityContainerMapping>
+          <EntitySetMapping Name="Cat_Continents">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Cat_Continents">
+              <MappingFragment StoreEntitySet="Cat_Continents">
+                <ScalarProperty Name="Continent" ColumnName="Continent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cat_Countries">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Cat_Countries">
+              <MappingFragment StoreEntitySet="Cat_Countries">
+                <ScalarProperty Name="IdContinent" ColumnName="IdContinent" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cat_Platforms">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Cat_Platforms">
+              <MappingFragment StoreEntitySet="Cat_Platforms">
+                <ScalarProperty Name="Platform" ColumnName="Platform" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Movies">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rel_User_Movie">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Rel_User_Movie">
+              <MappingFragment StoreEntitySet="Rel_User_Movie">
+                <ScalarProperty Name="IdMovie" ColumnName="IdMovie" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rel_User_Movie_Platform">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Rel_User_Movie_Platform">
+              <MappingFragment StoreEntitySet="Rel_User_Movie_Platform">
+                <ScalarProperty Name="IdPlatform" ColumnName="IdPlatform" />
+                <ScalarProperty Name="Id_Rel_User_Movie" ColumnName="Id_Rel_User_Movie" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MyMovieLibraryModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IdCountry" ColumnName="IdCountry" />
+                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
@@ -187,7 +432,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
