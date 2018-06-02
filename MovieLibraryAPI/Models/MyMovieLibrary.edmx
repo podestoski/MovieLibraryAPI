@@ -211,7 +211,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Continent" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cat_Countries" Relationship="MyMovieLibraryModel.FK__Cat_Count__IdCon__4D94879B" FromRole="Cat_Continents" ToRole="Cat_Countries" />
         </EntityType>
         <EntityType Name="Cat_Countries">
           <Key>
@@ -221,8 +220,6 @@
           <Property Name="Country" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="IdContinent" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cat_Continents" Relationship="MyMovieLibraryModel.FK__Cat_Count__IdCon__4D94879B" FromRole="Cat_Countries" ToRole="Cat_Continents" />
-          <NavigationProperty Name="Users" Relationship="MyMovieLibraryModel.FK__Users__IdCountry__5165187F" FromRole="Cat_Countries" ToRole="Users" />
         </EntityType>
         <EntityType Name="Cat_Platforms">
           <Key>
@@ -230,7 +227,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Platform" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Rel_User_Movie_Platform" Relationship="MyMovieLibraryModel.FK__Rel_User___IdPla__71D1E811" FromRole="Cat_Platforms" ToRole="Rel_User_Movie_Platform" />
         </EntityType>
         <EntityType Name="Movies">
           <Key>
@@ -239,7 +235,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Rel_User_Movie" Relationship="MyMovieLibraryModel.FK__Rel_User___IdMov__5812160E" FromRole="Movies" ToRole="Rel_User_Movie" />
         </EntityType>
         <EntityType Name="Rel_User_Movie">
           <Key>
@@ -248,9 +243,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="Int32" Nullable="false" />
           <Property Name="IdMovie" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Movies" Relationship="MyMovieLibraryModel.FK__Rel_User___IdMov__5812160E" FromRole="Rel_User_Movie" ToRole="Movies" />
-          <NavigationProperty Name="Rel_User_Movie_Platform" Relationship="MyMovieLibraryModel.FK__Rel_User___Id_Re__70DDC3D8" FromRole="Rel_User_Movie" ToRole="Rel_User_Movie_Platform" />
-          <NavigationProperty Name="Users" Relationship="MyMovieLibraryModel.FK__Rel_User___IdUse__571DF1D5" FromRole="Rel_User_Movie" ToRole="Users" />
         </EntityType>
         <EntityType Name="Rel_User_Movie_Platform">
           <Key>
@@ -259,8 +251,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_Rel_User_Movie" Type="Int32" Nullable="false" />
           <Property Name="IdPlatform" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cat_Platforms" Relationship="MyMovieLibraryModel.FK__Rel_User___IdPla__71D1E811" FromRole="Rel_User_Movie_Platform" ToRole="Cat_Platforms" />
-          <NavigationProperty Name="Rel_User_Movie" Relationship="MyMovieLibraryModel.FK__Rel_User___Id_Re__70DDC3D8" FromRole="Rel_User_Movie_Platform" ToRole="Rel_User_Movie" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -272,8 +262,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Last_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IdCountry" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cat_Countries" Relationship="MyMovieLibraryModel.FK__Users__IdCountry__5165187F" FromRole="Users" ToRole="Cat_Countries" />
-          <NavigationProperty Name="Rel_User_Movie" Relationship="MyMovieLibraryModel.FK__Rel_User___IdUse__571DF1D5" FromRole="Users" ToRole="Rel_User_Movie" />
         </EntityType>
         <Association Name="FK__Cat_Count__IdCon__4D94879B">
           <End Type="MyMovieLibraryModel.Cat_Continents" Role="Cat_Continents" Multiplicity="1" />

@@ -14,16 +14,7 @@ namespace MovieLibraryAPI.Models
     
     public partial class Cat_Platforms
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cat_Platforms()
-        {
-            this.Rel_User_Movie_Platform = new HashSet<Rel_User_Movie_Platform>();
-        }
-    
         public int Id { get; set; }
         public string Platform { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rel_User_Movie_Platform> Rel_User_Movie_Platform { get; set; }
     }
 }

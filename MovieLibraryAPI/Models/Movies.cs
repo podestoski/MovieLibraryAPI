@@ -14,17 +14,8 @@ namespace MovieLibraryAPI.Models
     
     public partial class Movies
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Movies()
-        {
-            this.Rel_User_Movie = new HashSet<Rel_User_Movie>();
-        }
-    
         public int Id { get; set; }
         public string Title { get; set; }
         public string ImagePath { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rel_User_Movie> Rel_User_Movie { get; set; }
     }
 }

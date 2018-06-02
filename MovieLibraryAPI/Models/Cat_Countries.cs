@@ -14,19 +14,9 @@ namespace MovieLibraryAPI.Models
     
     public partial class Cat_Countries
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Cat_Countries()
-        {
-            this.Users = new HashSet<Users>();
-        }
-    
         public int Id { get; set; }
         public string Country { get; set; }
         public string Code { get; set; }
         public int IdContinent { get; set; }
-    
-        public virtual Cat_Continents Cat_Continents { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
     }
 }

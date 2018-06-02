@@ -14,19 +14,8 @@ namespace MovieLibraryAPI.Models
     
     public partial class Rel_User_Movie
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Rel_User_Movie()
-        {
-            this.Rel_User_Movie_Platform = new HashSet<Rel_User_Movie_Platform>();
-        }
-    
         public int Id { get; set; }
         public int IdUser { get; set; }
         public int IdMovie { get; set; }
-    
-        public virtual Movies Movies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rel_User_Movie_Platform> Rel_User_Movie_Platform { get; set; }
-        public virtual Users Users { get; set; }
     }
 }

@@ -17,8 +17,5 @@ namespace MovieLibraryAPI.Models
         public int Id { get; set; }
         public int Id_Rel_User_Movie { get; set; }
         public int IdPlatform { get; set; }
-    
-        public virtual Cat_Platforms Cat_Platforms { get; set; }
-        public virtual Rel_User_Movie Rel_User_Movie { get; set; }
     }
 }
