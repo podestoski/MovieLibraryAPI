@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using MovieLibraryAPI.Models;
 
@@ -37,6 +38,51 @@ namespace MovieLibraryAPI.Controllers
                 idUser = idUser,
                 Movies = libraryMovies
             };
+        }
+
+        [HttpPost]
+        public HttpResponseMessage PostMovie(int idUser, LibraryMovie libraryMovie)
+        {
+            List<Movies> existing_movie = db.Movies.Where(o => o.Id.Equals(libraryMovie.Id)).ToList();
+                
+            
+
+            if (existing_movie.Count <= 0)
+            {
+                Movies new_movie = new Movies();
+                new_movie.Id = libraryMovie.Id;
+                new_movie.ImagePath = libraryMovie.ImagePath;
+                new_movie.Title = libraryMovie.Title;
+                db.Movies.Add(new_movie);
+                db.SaveChanges();
+            }
+
+            Rel_User_Movie new_rel_User_Movie = new Rel_User_Movie();
+
+            new_rel_User_Movie.IdMovie = libraryMovie.Id;
+            new_rel_User_Movie.IdUser = idUser;
+
+            db.Rel_User_Movie.Add(new_rel_User_Movie);
+
+            db.SaveChanges();
+
+            var existing_rel =
+                from rels in db.Rel_User_Movie
+                where rels.IdMovie == libraryMovie.Id && rels.IdUser == idUser
+                select new { rels.Id };
+            
+
+            foreach (Platform platform in libraryMovie.platforms)
+            {
+                Rel_User_Movie_Platform new_rel_user_Movie_Platform = new Rel_User_Movie_Platform();
+                new_rel_user_Movie_Platform.IdPlatform = platform.Id;
+                new_rel_user_Movie_Platform.Id_Rel_User_Movie = existing_rel.First().Id;
+                db.Rel_User_Movie_Platform.Add(new_rel_user_Movie_Platform);
+            }
+
+            db.SaveChanges();
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+
         }
     }
 }
