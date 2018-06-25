@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using MovieLibraryAPI.Models;
 
@@ -35,6 +37,28 @@ namespace MovieLibraryAPI.Controllers
 
             return users[0].Id;
 
+        }
+
+        [HttpPost]
+        public object PostUser(PostUser user)
+        {
+            try
+            {
+                Users newUser = new Users();
+                newUser.Email = user.Email;
+                newUser.Name = user.Name;
+                newUser.Last_name = user.LastName;
+                newUser.Password = user.Password;
+                newUser.IdCountry = 1;
+
+                db.Users.Add(newUser);
+                db.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            }
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
     }
 }

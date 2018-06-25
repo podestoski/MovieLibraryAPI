@@ -227,6 +227,7 @@
       <DependentUpon>MyMovieLibrary.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Platform.cs" />
+    <Compile Include="Models\PostUser.cs" />
     <Compile Include="Models\Rel_User_Movie.cs">
       <DependentUpon>MyMovieLibrary.tt</DependentUpon>
     </Compile>
